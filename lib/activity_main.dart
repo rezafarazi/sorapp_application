@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';  
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:sorapp.ir/activity_post.dart';
 
 
 
@@ -46,14 +49,11 @@ class activity_main extends State<activity_main_state>
   //Global Variables
   int select_menu_item=0;
   List all_posts=[];
-
-
-  //Panels Start
   List<Widget> Menu_Panels=[];
-  //Panels End
 
 
 
+  //Iniilazeing Start
   @override
   void initState() 
   {
@@ -61,11 +61,12 @@ class activity_main extends State<activity_main_state>
     GetLoadAllPosts();
 
     //Get All Panels Start
-    Menu_Panels.add(All_Posts_Widget());
-    Menu_Panels.add(All_Posts_Widget());
-    Menu_Panels.add(All_Posts_Widget());
+    Menu_Panels.add(Search_Widget());
+    Menu_Panels.add(Profile_Widget());
     //Get All Panels End
   }
+  //Iniilazeing End 
+
 
 
   //Main function Start
@@ -74,8 +75,8 @@ class activity_main extends State<activity_main_state>
   {
     return Scaffold(
       body: Center(
-        // child:Menu_Panels.elementAt(select_menu_item)
-        child:All_Posts_Widget()
+        child:Menu_Panels.elementAt(select_menu_item)
+        // child:All_Posts_Widget()
       ),
       bottomNavigationBar: BottomNavigationBar(
         items:
@@ -118,9 +119,34 @@ class activity_main extends State<activity_main_state>
 
 
 
+  //On Click Menu Item Start
+  void OnClick_All_Posts_Item(int position)
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> activity_post_state()));
+    debugPrint("Click "+position.toString());
+  }
+  //On Click Menu Item End
 
 
-  Widget All_Posts_Widget()
+
+  // Get Load All Posts Start
+  Future<void> GetLoadAllPosts() async
+  {
+    var response=await http.get(Uri.parse('https://rezafarazi.github.io/Online_Json_Api/sorapp.json'));
+
+    setState(() 
+    {
+      all_posts=jsonDecode(response.body);
+      Menu_Panels.insert(0,Home_Widget());
+    });
+    
+  }
+  // Get Load All Posts End
+
+
+
+  //Home Widget Start
+  Widget Home_Widget()
   {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -132,7 +158,9 @@ class activity_main extends State<activity_main_state>
         // return Image.network(all_posts[position]['Image']);
         return Padding(padding: EdgeInsets.all(16.0),
         child:FlatButton(
-          onPressed: OnClick_All_Posts_Item,
+            onPressed: ()=>{
+              OnClick_All_Posts_Item(position)
+            },
             child: Text(all_posts[position]['Title'],
             textAlign: TextAlign.center,),
           ),
@@ -140,35 +168,23 @@ class activity_main extends State<activity_main_state>
       },
     );
   }
+  //Home Widget End
 
 
 
-
-
-  //On Click Menu Item Start
-  void OnClick_All_Posts_Item(){
-    debugPrint("Click");
+  //Search Widget Start
+  Widget Search_Widget() {
+    return Text("Search");
   }
-  //On Click Menu Item End
+  //Search Widget End
 
 
 
-
-  
-  // Get Load All Posts Start
-  Future<void> GetLoadAllPosts() async
-  {
-    var response=await http.get(Uri.parse('https://rezafarazi.github.io/Online_Json_Api/sorapp.json'));
-
-    setState(() 
-    {
-      all_posts=jsonDecode(response.body);
-    });
-    
+  //Profile Widget Start
+  Widget Profile_Widget() {
+    return Text("Profile");
   }
-  // Get Load All Posts End
-
-
+  //Profile Widget End
 
 
 }
