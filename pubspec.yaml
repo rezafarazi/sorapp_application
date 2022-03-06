@@ -52,6 +52,10 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+  flutter_launcher_icons: "^0.9.2"
+flutter_icons:
+  image_path: "assets/logo.png"
+
 flutter:
 
   # The following line ensures that the Material Icons font is

@@ -24,9 +24,10 @@ class activity_splash extends StatelessWidget
     Timer t=new Timer.periodic(new Duration(seconds:1), (timer) { 
 
       timer_counter++;
-      if(timer_counter>=10)
+      if(timer_counter>=3)
       {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> activity_main()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=> activity_main()));
+        Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=> activity_main_state()),(Route<dynamic> route)=>false);
         timer.cancel();
       }
 
