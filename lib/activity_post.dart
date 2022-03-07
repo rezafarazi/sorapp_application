@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class activity_post_state extends StatefulWidget
 {
@@ -14,7 +15,11 @@ class activity_post extends State<activity_post_state>
   @override
   Widget build(BuildContext context) 
   {
-    return Text("Salam");
+    return Scaffold(
+      body: Center(
+        child:Text("Post Page")
+      ),
+    );
   }
   
 }
