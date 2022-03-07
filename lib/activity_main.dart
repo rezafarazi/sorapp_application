@@ -132,7 +132,7 @@ class activity_main extends State<activity_main_state>
   // Get Load All Posts Start
   Future<void> GetLoadAllPosts() async
   {
-    var response=await http.get(Uri.parse('https://rezafarazi.github.io/Online_Json_Api/sorapp.json'));
+    var response=await http.get(Uri.parse('https://rezafarazi.github.io/Online_Json_Api/sorapp_posts.json'));
 
     setState(() 
     {
